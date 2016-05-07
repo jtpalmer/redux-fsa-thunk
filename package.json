@@ -6,8 +6,8 @@
   "scripts": {
     "lint": "eslint .",
     "build": "babel src --out-dir lib",
-    "test": "npm run lint && npm run build && mocha",
-    "prepublish": "npm run test"
+    "test": "npm run build && mocha",
+    "prepublish": "npm run lint && npm run test"
   },
   "repository": {
     "type": "git",
