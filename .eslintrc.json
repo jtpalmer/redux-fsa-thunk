@@ -1,0 +1,28 @@
+{
+  "root": true,
+  "parser": "babel-eslint",
+  "env": {
+    "es6": true,
+    "node": true
+  },
+  "parserOptions": {
+    "sourceType": "module",
+    "ecmaVersion": 6
+  },
+  "extends": "eslint:recommended",
+  "plugins": [
+    "babel"
+  ],
+  "rules": {
+    "babel/object-shorthand": 1
+  },
+  "settings": {
+    "import/parser": "babel-eslint",
+    "import/resolve": {
+      "moduleDirectory": [
+        "node_modules",
+        "src"
+      ]
+    }
+  }
+}
