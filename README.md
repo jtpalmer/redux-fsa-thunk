@@ -1,5 +1,4 @@
-Redux FSA Thunk
-===============
+# redux-fsa-thunk
 
 [![Build Status](https://travis-ci.org/jtpalmer/redux-fsa-thunk.svg?branch=master)](https://travis-ci.org/jtpalmer/redux-fsa-thunk)
 
