@@ -1,6 +1,8 @@
 Redux FSA Thunk
 ===============
 
+[![Build Status](https://travis-ci.org/jtpalmer/redux-fsa-thunk.svg?branch=master)](https://travis-ci.org/jtpalmer/redux-fsa-thunk)
+
 [FSA][]-compliant [thunk][] [middleware][] for [Redux][].
 
 ```sh
