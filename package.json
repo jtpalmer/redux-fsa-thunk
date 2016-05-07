@@ -13,7 +13,7 @@
     "type": "git",
     "url": "https://github.com/jtpalmer/redux-fsa-thunk.git"
   },
-  "homepage": "https://github.com/jtpalmer/redux-fsa-thunk.",
+  "homepage": "https://github.com/jtpalmer/redux-fsa-thunk",
   "keywords": [
     "redux",
     "thunk",
