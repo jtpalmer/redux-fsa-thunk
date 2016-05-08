@@ -10,6 +10,9 @@ npm install redux-fsa-thunk
 
 ## Middleware Usage
 
+The middleware function is the default export and is used like any other
+middleware.
+
 ```js
 import { createStore, applyMiddleware } from 'redux';
 import fsaThunkMiddleware from 'redux-fsa-thunk';
@@ -23,26 +26,49 @@ const store = createStore(
 
 ## Actions
 
+Like [redux-thunk][], redux-fsa-thunk is used to allow action creators
+to return functions that dispatch other actions, possibly asynchronously
+or conditionally.  The first difference is that redux-fsa-thunk
+middleware only handles FSA actions.  The `payload` of the action
+must be a function.  Another difference from redux-thunk is that in
+addition to any actions dispatched inside the function, the original
+action is also dispatched before executing the function, but with the
+function removed from the `payload` and replaced with `null`.
+
 ```js
 const action = {
-  type: 'MY_THUNK',
+  type: 'EXAMPLE_ACTION',
   payload: (dispatch, getState) => {
-    // Do something asynchronous and then dispatch another action.
+    // Dispatch other actions here.
   }
 };
 ```
+
+The thunk function will be executed synchronously and the `dispatch` and
+`getState` functions from the `store` are passed as arguments to the
+function.
 
 ```js
 const action = {
   type: 'FIRST_ACTION',
   payload: (dispatch, getState) => {
     dispatch({ type: 'SECOND_ACTION' });
-    dispatch({ type: 'THIRD_ACTION' });
+
+    if (getState().foo) {
+      dispatch({ type: 'THIRD_ACTION' });
+    }
+
+    fetch('/data')
+      .then(response => response.json())
+      .then(json => dispatch({ type: 'FOURTH_ACTION', payload: json });
   }
 };
 ```
 
 ## Usage with redux-actions
+
+Since redux-fsa-thunk only handles FSA actions you can use
+[redux-actions][] to create thunk actions.
 
 ```js
 import { createAction } from 'redux-actions';
@@ -51,7 +77,7 @@ const fetchUser = createAction('FETCH_USER', (id) => {
   return (dispatch, getState) => {
     fetch('/user/' + id).then(
       user => dispatch(fetchUserSuccess(user)),
-      err => dispatch(fetchUserFailure(err)),
+      err => dispatch(fetchUserFailure(err))
     )
   };
 });
@@ -63,6 +89,12 @@ dispatch(fetchUser(1));
 ```
 
 ## Optimistic Updates
+
+One common use case for thunks is performing optimistic updates before
+any asynchronous operations complete.  In this example an update to a
+user in the store is dispatched and the store is updated synchronously,
+but the previous user state is stored so that it can be rolled back if
+the asynchronous update fails.
 
 ```js
 import { createAction, handleActions } from 'redux-actions';
@@ -81,7 +113,7 @@ const updateUser = createAction(
         body: JSON.stringify(data)
       }).then(
         user => dispatch(fetchUserSuccess({ id, user })),
-        err => dispatch(fetchUserFailure({ id, err })),
+        err => dispatch(fetchUserFailure({ id, err }))
       )
     };
   },
@@ -145,7 +177,6 @@ const reducer = handleActions({
 
 dispatch(updateUser('j.doe', { name: 'Jack Doe' }));
 ```
-
 
 ## See Also
 
