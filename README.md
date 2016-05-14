@@ -112,8 +112,8 @@ const updateUser = createAction(
         },
         body: JSON.stringify(data)
       }).then(
-        user => dispatch(fetchUserSuccess({ id, user })),
-        err => dispatch(fetchUserFailure({ id, err }))
+        user => dispatch(updateUserSuccess({ id, user })),
+        err => dispatch(updateUserFailure({ id, err }))
       )
     };
   },
